@@ -25,7 +25,11 @@ export default function Home() {
     newTodo[index].complete = !newTodo[index].complete
     setStates(newTodo)
   }
-  return (
+  const cancelStates = () => {
+    setValueTodo('')
+    setValueLimit('')
+  }
+    return (
     <>
     <h1>ToDoリスト</h1>
     <div>やる事</div>
@@ -35,7 +39,7 @@ export default function Home() {
     {/* <div>状態</div>
     <input value={valueState} onChange={e => setValueState(e.target.value)}/> */}
     <button value={addTodo} onClick={handleSubmit}>追加</button>
-    <button>キャンセル</button>
+    <button onClick={cancelStates}>キャンセル</button>
     <table>
       <thead>
         <tr>
