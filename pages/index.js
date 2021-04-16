@@ -29,6 +29,9 @@ export default function Home() {
     setValueTodo('')
     setValueLimit('')
   }
+  const editStates = () => {
+    
+  }
     return (
     <>
     <h1>ToDoリスト</h1>
@@ -53,7 +56,10 @@ export default function Home() {
         {states && states.map((state, index) => (
           <tr key={index}>
             <td>{index + 1}</td>
-            <td>{state.text[0]}</td>
+            {/* <td>{state.text[0]}</td> */}
+            <td>
+              <input value={state.text[0]} />
+            </td>
             <td>{state.text[1]}</td>
             {/* <td>{state[2]}</td> */}
             <td>
@@ -62,6 +68,9 @@ export default function Home() {
               <button onClick={() => changeStates(index)}>
                 {state.complete ? '完了' : '未完了'}
               </button>
+            </td>
+            <td>
+              <button onClick={editStates}>編集</button>
             </td>
             <td>
               <button onClick={deleteStates}>削除</button>
