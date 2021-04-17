@@ -1,6 +1,38 @@
-import React from 'react'
-
-const edit = () => {
+import React, { useState } from 'react'
+// import Head from 'next/head'
+// import Link from 'next/link’
+export default function edit() {
+  const [valueTodo, setValueTodo] = useState('')
+  const [valueLimit, setValueLimit] = useState('')
+  // const [valueState, setValueState] = useState('')
+  const [states, setStates] = useState([])
+  // const todos = [valueTodo, valueLimit, valueState]
+  const addTodo= text => {
+    const newTodo = [...states, {text, complete: false}]
+    setStates(newTodo)
+  }
+  const handleSubmit = e => {
+    e.preventDefault()
+    addTodo([valueTodo, valueLimit])
+  }
+  const deleteStates = index => {
+    const newTodo = [...states]
+    newTodo.splice(index, 1)
+    setStates(newTodo)
+  }
+  const changeStates = index => {
+    const newTodo = [...states]
+    newTodo[index].complete = !newTodo[index].complete
+    setStates(newTodo)
+  }
+  const cancelStates = () => {
+    setValueTodo('')
+    setValueLimit('')
+  }
+  const editStates = () => {
+    const newTodo = [...states]
+    setStates(newTodo)
+  }
   return (
     <>
     <table>
@@ -36,6 +68,5 @@ const edit = () => {
       </tbody>
     </table>
     </>
-}
-
-export default edit
+  )}
+  

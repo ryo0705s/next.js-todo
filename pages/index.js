@@ -1,4 +1,5 @@
-import Head from 'next/head'
+// import Head from 'next/head'
+import Link from 'next/link'
 import React, { useState } from 'react'
 
 export default function Home() {
@@ -30,8 +31,10 @@ export default function Home() {
     setValueLimit('')
   }
   const editStates = () => {
-    
+    const newTodo = [...states]
+    setStates(newTodo)
   }
+  // console.log({editStates})
     return (
     <>
     <h1>ToDoリスト</h1>
@@ -56,10 +59,10 @@ export default function Home() {
         {states && states.map((state, index) => (
           <tr key={index}>
             <td>{index + 1}</td>
-            {/* <td>{state.text[0]}</td> */}
-            <td>
-              <input value={state.text[0]} />
-            </td>
+            <td>{state.text[0]}</td>
+            {/* <td>
+              {state.onClick={editStates} ? <input value={state.text[0]} /> : {state.text[0]}}
+            </td> */}
             <td>{state.text[1]}</td>
             {/* <td>{state[2]}</td> */}
             <td>
@@ -70,7 +73,9 @@ export default function Home() {
               </button>
             </td>
             <td>
-              <button onClick={editStates}>編集</button>
+              <Link href="/edit">
+                <a><button onClick={editStates}>編集</button></a>
+              </Link>
             </td>
             <td>
               <button onClick={deleteStates}>削除</button>
