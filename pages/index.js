@@ -1,8 +1,10 @@
 // import Head from 'next/head'
+// import { useRouter } from 'next/router';
 import Link from 'next/link'
 import React, { useState } from 'react'
 
 export default function Home() {
+  // const router = useRouter();
   const [valueTodo, setValueTodo] = useState('')
   const [valueLimit, setValueLimit] = useState('')
   // const [valueState, setValueState] = useState('')
@@ -32,6 +34,10 @@ export default function Home() {
   }
   const editStates = () => {
     const newTodo = [...states]
+    // router.push({
+    //   pathname:"/edit",   //URL
+    //   query: {state :state} //検索クエリ
+    // });
     setStates(newTodo)
   }
   // console.log({editStates})
@@ -74,7 +80,7 @@ export default function Home() {
             </td>
             <td>
               <Link href="/edit">
-                <a><button onClick={editStates}>編集</button></a>
+                <button onClick={editStates}>編集</button>  
               </Link>
             </td>
             <td>
@@ -84,6 +90,7 @@ export default function Home() {
         ))}
       </tbody>
     </table>
+    < edit />
     </>
   )
 }

@@ -1,3 +1,4 @@
+// import { useRouter } from 'next/router';
 import React, { useState } from 'react'
 // import Head from 'next/head'
 // import Link from 'next/link’
@@ -33,6 +34,7 @@ export default function edit() {
     const newTodo = [...states]
     setStates(newTodo)
   }
+  // const router = useRouter();
   return (
     <>
     <table>
