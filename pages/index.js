@@ -1,7 +1,11 @@
 // import Head from 'next/head'
 // import { useRouter } from 'next/router';
 import Link from 'next/link'
+import Image from 'next/image'
+import Head from 'next/head'
+import Layout from '../components/layout'
 import React, { useState } from 'react'
+import layout from '../components/layout'
 
 export default function Home() {
   // const router = useRouter();
@@ -43,6 +47,11 @@ export default function Home() {
   // console.log({editStates})
     return (
     <>
+    <layout>
+    <Head>
+      <title>todoアプリ</title>
+    </Head>
+    <image src='../public/images/profile.jpg' alt='top画像' />
     <h1>ToDoリスト</h1>
     <div>やる事</div>
     <input value={valueTodo} onChange={e => setValueTodo(e.target.value)}/>
@@ -90,7 +99,7 @@ export default function Home() {
         ))}
       </tbody>
     </table>
-    < edit />
+    </layout>
     </>
   )
 }
