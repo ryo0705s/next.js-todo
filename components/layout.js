@@ -1,3 +1,5 @@
+import styles from './layout.module.css'
 export default function layout({ children }) {
-  return <fiv>{children}</fiv>
+  return <div className={styles.container}>{children}</div>
 }
+

@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Head from 'next/head'
 import Layout from '../components/layout'
 import React, { useState } from 'react'
-import layout from '../components/layout'
 
 export default function Home() {
   // const router = useRouter();
@@ -47,12 +46,17 @@ export default function Home() {
   // console.log({editStates})
     return (
     <>
-    <layout>
+    <Layout>
     <Head>
       <title>todoアプリ</title>
     </Head>
-    <image src='../public/images/profile.jpg' alt='top画像' />
     <h1>ToDoリスト</h1>
+    <Image 
+      src='/images/profile.jpg' 
+      height={180}
+      width={180}
+      alt='top画像' 
+    />
     <div>やる事</div>
     <input value={valueTodo} onChange={e => setValueTodo(e.target.value)}/>
     <div>期限</div>
@@ -99,7 +103,7 @@ export default function Home() {
         ))}
       </tbody>
     </table>
-    </layout>
+    </Layout>
     </>
   )
 }
