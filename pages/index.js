@@ -4,7 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'
 import Layout from '../components/layout'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import AppContext from './provider'
 
 export default function Home() {
   // const router = useRouter();
@@ -46,7 +47,7 @@ export default function Home() {
     console.log({editStates})
   }
   return (
-    <>
+    <AppProvider>
     <Layout>
     <Head>
       <title>todoアプリ</title>
@@ -83,7 +84,7 @@ export default function Home() {
             <td>
               {/* {state.onClick={editStates} ? <input value={state.text[0]} /> : {state.text[0]}} */}
               {/* {1 == 1 ? <input value={state.text[0]} /> : state.text[0]} */}
-              {state={editStates} ? <input value={state.text[0]} /> : state.text[0]}
+              {/* {state={editStates} ? <input value={state.text[0]} /> : state.text[0]} */}
               {/* if (state={editStates}) = {
                 return <input value={state.text[0]} />
                } else {
@@ -91,7 +92,7 @@ export default function Home() {
                }
                 */}
             </td>
-            {/* <td>{state.text[1]}</td> */}
+            <td>{state.text[1]}</td>
             <td>
               {/* <button onClick={changeStates}> */}
               {/* <button onClick={ index => changeStates}> */}
@@ -100,9 +101,9 @@ export default function Home() {
               </button>
             </td>
             <td>  
-              {/* <Link href="/edit"> */}
+              <Link href="/edit">
                 <button onClick={() => editStates(index)}>編集</button>  
-              {/* </Link> */}
+              </Link>
             </td>
             <td>
               <button onClick={deleteStates}>削除</button>
@@ -112,6 +113,6 @@ export default function Home() {
       </tbody>
     </table>
     </Layout>
-    </>
+    </AppProvider>
   )
 }
