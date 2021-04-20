@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Head from 'next/head'
 import Layout from '../components/layout'
 import React, { useState, useContext } from 'react'
-// import AppContext from './provider'
+import { AppContext } from './provider'
 
 export default function Home() {
   // const router = useRouter();
@@ -48,8 +48,14 @@ export default function Home() {
     setStates(newTodo)
     // console.log({editStates})
   }
+  const updateStates = index => {
+    const newTodo = [...states]
+    setStates(newTodo[index])
+    console.log({updateStates})
+  }
   return (
     <>
+    {/* <AppContext> */}
     <Layout>
     <Head>
       <title>todoアプリ</title>
@@ -60,7 +66,7 @@ export default function Home() {
       height={180}
       width={180}
       alt='top画像' 
-    />
+      />
     <div>やる事</div>
     <input value={valueTodo} onChange={e => setValueTodo(e.target.value)}/>
     <div>期限</div>
@@ -86,13 +92,13 @@ export default function Home() {
             <td>
               {/* {state.onClick={editStates} ? <input value={state.text[0]} /> : {state.text[0]}} */}
               {/* {1 == 1 ? <input value={state.text[0]} /> : state.text[0]} */}
-              {state.edit ? <input value={state.text[0]} /> : state.text[0]}
+              {state.edit ? <input value={state.text[1]} onChange={updateStates}/> : state.text[1]}
               {/* if (state={editStates}) = {
                 return <input value={state.text[0]} />
-               } else {
+              } else {
                 retrun state.text[0]
-               }
-                */}
+              }
+            */}
             </td>
             {/* <td>{state.text[1]}</td> */}
             <td>
@@ -115,6 +121,7 @@ export default function Home() {
       </tbody>
     </table>
     </Layout>
+    {/* </AppContext> */}
     </>
   )
 }
