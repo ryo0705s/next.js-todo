@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Head from 'next/head'
 import Layout from '../components/layout'
 import React, { useState, useContext } from 'react'
-import AppContext from './provider'
+// import AppContext from './provider'
 
 export default function Home() {
   // const router = useRouter();
@@ -15,12 +15,13 @@ export default function Home() {
   const [states, setStates] = useState([])
   // const todos = [valueTodo, valueLimit, valueState]
   const addTodo= text => {
-    const newTodo = [...states, {text, complete: false}]
+    const newTodo = [...states, {text, complete: false, edit: false}]
     setStates(newTodo)
   }
   const handleSubmit = e => {
     e.preventDefault()
     addTodo([valueTodo, valueLimit])
+    // console.log(handleSubmit)
   }
   const deleteStates = index => {
     const newTodo = [...states]
@@ -31,23 +32,24 @@ export default function Home() {
     const newTodo = [...states]
     newTodo[index].complete = !newTodo[index].complete
     setStates(newTodo)
-    console.log({changeStates})
+    // console.log({changeStates})
   }
   const cancelStates = () => {
     setValueTodo('')
     setValueLimit('')
   }
-  const editStates = () => {
+  const editStates = index => {
     // router.push({
     //   pathname:"/edit",
     //   query: {state :state} 
     // });
     const newTodo = [...states]
+    newTodo[index].edit = !newTodo[index].edit
     setStates(newTodo)
-    console.log({editStates})
+    // console.log({editStates})
   }
   return (
-    <AppProvider>
+    <>
     <Layout>
     <Head>
       <title>todoアプリ</title>
@@ -84,7 +86,7 @@ export default function Home() {
             <td>
               {/* {state.onClick={editStates} ? <input value={state.text[0]} /> : {state.text[0]}} */}
               {/* {1 == 1 ? <input value={state.text[0]} /> : state.text[0]} */}
-              {/* {state={editStates} ? <input value={state.text[0]} /> : state.text[0]} */}
+              {state.edit ? <input value={state.text[0]} /> : state.text[0]}
               {/* if (state={editStates}) = {
                 return <input value={state.text[0]} />
                } else {
@@ -92,7 +94,7 @@ export default function Home() {
                }
                 */}
             </td>
-            <td>{state.text[1]}</td>
+            {/* <td>{state.text[1]}</td> */}
             <td>
               {/* <button onClick={changeStates}> */}
               {/* <button onClick={ index => changeStates}> */}
@@ -101,9 +103,9 @@ export default function Home() {
               </button>
             </td>
             <td>  
-              <Link href="/edit">
+              {/* <Link href="/edit"> */}
                 <button onClick={() => editStates(index)}>編集</button>  
-              </Link>
+              {/* </Link> */}
             </td>
             <td>
               <button onClick={deleteStates}>削除</button>
@@ -113,6 +115,6 @@ export default function Home() {
       </tbody>
     </table>
     </Layout>
-    </AppProvider>
+    </>
   )
 }
