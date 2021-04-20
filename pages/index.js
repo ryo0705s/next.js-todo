@@ -30,21 +30,22 @@ export default function Home() {
     const newTodo = [...states]
     newTodo[index].complete = !newTodo[index].complete
     setStates(newTodo)
+    console.log({changeStates})
   }
   const cancelStates = () => {
     setValueTodo('')
     setValueLimit('')
   }
   const editStates = () => {
-    const newTodo = [...states]
     // router.push({
-    //   pathname:"/edit",   //URL
-    //   query: {state :state} //検索クエリ
+    //   pathname:"/edit",
+    //   query: {state :state} 
     // });
+    const newTodo = [...states]
     setStates(newTodo)
+    console.log({editStates})
   }
-  // console.log({editStates})
-    return (
+  return (
     <>
     <Layout>
     <Head>
@@ -79,11 +80,18 @@ export default function Home() {
           <tr key={index}>
             <td>{index + 1}</td>
             <td>{state.text[0]}</td>
-            {/* <td>
-              {state.onClick={editStates} ? <input value={state.text[0]} /> : {state.text[0]}}
-            </td> */}
-            <td>{state.text[1]}</td>
-            {/* <td>{state[2]}</td> */}
+            <td>
+              {/* {state.onClick={editStates} ? <input value={state.text[0]} /> : {state.text[0]}} */}
+              {/* {1 == 1 ? <input value={state.text[0]} /> : state.text[0]} */}
+              {state={editStates} ? <input value={state.text[0]} /> : state.text[0]}
+              {/* if (state={editStates}) = {
+                return <input value={state.text[0]} />
+               } else {
+                retrun state.text[0]
+               }
+                */}
+            </td>
+            {/* <td>{state.text[1]}</td> */}
             <td>
               {/* <button onClick={changeStates}> */}
               {/* <button onClick={ index => changeStates}> */}
@@ -91,10 +99,10 @@ export default function Home() {
                 {state.complete ? '完了' : '未完了'}
               </button>
             </td>
-            <td>
-              <Link href="/edit">
-                <button onClick={editStates}>編集</button>  
-              </Link>
+            <td>  
+              {/* <Link href="/edit"> */}
+                <button onClick={() => editStates(index)}>編集</button>  
+              {/* </Link> */}
             </td>
             <td>
               <button onClick={deleteStates}>削除</button>
