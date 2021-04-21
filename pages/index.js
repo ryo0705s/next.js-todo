@@ -4,8 +4,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'
 import Layout from '../components/layout'
-import React, { useState, useContext } from 'react'
-import { AppContext } from './provider'
+import React, { useState } from 'react'
+
+export const AppContext = React.createContext()
 
 export default function Home() {
   // const router = useRouter();
@@ -55,7 +56,19 @@ export default function Home() {
   }
   return (
     <>
-    {/* <AppContext> */}
+    <AppContext.Provider
+    value={{
+      valueTodo,
+      valueLimit,
+      states,
+      addTodo: addTodo,
+      handleSubmit: handleSubmit,
+      deleteStates: deleteStates,
+      changeStates: changeStates,
+      cancelStates: cancelStates,
+      editStates: editStates
+    }}
+    >
     <Layout>
     <Head>
       <title>todoアプリ</title>
@@ -111,6 +124,7 @@ export default function Home() {
             <td>  
               {/* <Link href="/edit"> */}
                 <button onClick={() => editStates(index)}>編集</button>  
+                {/* <button>編集</button>   */}
               {/* </Link> */}
             </td>
             <td>
@@ -121,7 +135,7 @@ export default function Home() {
       </tbody>
     </table>
     </Layout>
-    {/* </AppContext> */}
+    </AppContext.Provider>
     </>
   )
 }
