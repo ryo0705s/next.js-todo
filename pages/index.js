@@ -51,7 +51,7 @@ export default function Home() {
   }
   const updateStates = index => {
     const newTodo = [...states]
-    setStates(newTodo[index])
+    setStates(newTodo[1])
     console.log({updateStates})
   }
   return (
@@ -105,7 +105,8 @@ export default function Home() {
             <td>
               {/* {state.onClick={editStates} ? <input value={state.text[0]} /> : {state.text[0]}} */}
               {/* {1 == 1 ? <input value={state.text[0]} /> : state.text[0]} */}
-              {state.edit ? <input value={state.text[1]} onChange={updateStates}/> : state.text[1]}
+              {/* {state.edit ? <input value={state.text[1]} onChange={ e => setStates(e.target.value)}/> : state.text[1]} */}
+              {state.edit ? <input value={state.text[1]} onChange={ updateStates }/> : state.text[1]}
               {/* if (state={editStates}) = {
                 return <input value={state.text[0]} />
               } else {
