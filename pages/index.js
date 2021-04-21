@@ -8,7 +8,7 @@ import React, { useState } from 'react'
 
 export const AppContext = React.createContext()
 
-export default function Home() {
+export default function Home({ children }) {
   // const router = useRouter();
   const [valueTodo, setValueTodo] = useState('')
   const [valueLimit, setValueLimit] = useState('')
@@ -123,10 +123,10 @@ export default function Home() {
               </button>
             </td>
             <td>  
-              {/* <Link href="/edit"> */}
-                <button onClick={() => editStates(index)}>編集</button>  
-                {/* <button>編集</button>   */}
-              {/* </Link> */}
+              <Link href="/edit">
+                {/* <button onClick={() => editStates(index)}>編集</button>   */}
+                <button>編集</button>  
+              </Link>
             </td>
             <td>
               <button onClick={deleteStates}>削除</button>
@@ -135,6 +135,7 @@ export default function Home() {
         ))}
       </tbody>
     </table>
+    {children}
     </Layout>
     </AppContext.Provider>
     </>
