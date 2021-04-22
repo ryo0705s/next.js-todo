@@ -8,7 +8,7 @@ import React, { useState } from 'react'
 
 export const AppContext = React.createContext()
 
-export default function Home({ children }) {
+const Home = ({ children }) => {
   // const router = useRouter();
   const [valueTodo, setValueTodo] = useState('')
   const [valueLimit, setValueLimit] = useState('')
@@ -59,8 +59,11 @@ export default function Home({ children }) {
     <AppContext.Provider
     value={{
       valueTodo,
+      setValueTodo: setValueTodo,
       valueLimit,
+      setValueLimit: setValueLimit,
       states,
+      setStates: setStates,  
       addTodo: addTodo,
       handleSubmit: handleSubmit,
       deleteStates: deleteStates,
@@ -141,3 +144,4 @@ export default function Home({ children }) {
     </>
   )
 }
+export default Home
