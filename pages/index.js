@@ -4,11 +4,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Head from 'next/head'
 import Layout from '../components/layout'
-import React, { useState } from 'react'
-
+import React, { useState, useContext } from 'react'
+// import { TestContext } from './_app'
 export const AppContext = React.createContext()
 
 const Home = ({ children }) => {
+  // const { test, teston } = useContext(TestContext)
   // const router = useRouter();
   const [valueTodo, setValueTodo] = useState('')
   const [valueLimit, setValueLimit] = useState('')
@@ -75,6 +76,8 @@ const Home = ({ children }) => {
     <Layout>
     <Head>
       <title>todoアプリ</title>
+      {/* <div>{test}</div>
+      <div>{teston}</div> */}
     </Head>
     <h1>ToDoリスト</h1>
     <Image 
