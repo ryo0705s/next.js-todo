@@ -2,12 +2,12 @@
 import React, { useState } from 'react'
 // import Head from 'next/head'
 // import Link from 'next/link’
-import Home from './index'
+// import Home from './index'
 import { AppContext } from './index'
 export default function edit() {
   return (
     <>
-    <Home>
+    {/* <Home> */}
     <table>
       <thead>
         <tr>
@@ -40,7 +40,7 @@ export default function edit() {
         ))}
       </tbody>
     </table>
-    </Home>
+    {/* </Home> */}
     </>
   )}
   

@@ -109,7 +109,7 @@ const Home = ({ children }) => {
               {/* {state.onClick={editStates} ? <input value={state.text[0]} /> : {state.text[0]}} */}
               {/* {1 == 1 ? <input value={state.text[0]} /> : state.text[0]} */}
               {/* {state.edit ? <input value={state.text[1]} onChange={ e => setStates(e.target.value)}/> : state.text[1]} */}
-              {state.edit ? <input value={state.text[1]} onChange={ updateStates }/> : state.text[1]}
+              {state.edit ? <input value={state.text[1]} onChange={ e => setStates(e.currentTarget.value)}/> : state.text[1]}
               {/* if (state={editStates}) = {
                 return <input value={state.text[0]} />
               } else {
@@ -126,10 +126,10 @@ const Home = ({ children }) => {
               </button>
             </td>
             <td>  
-              <Link href="/edit">
-                {/* <button onClick={() => editStates(index)}>編集</button>   */}
-                <button>編集</button>  
-              </Link>
+              {/* <Link href="/edit"> */}
+                <button onClick={() => editStates(index)}>編集</button>  
+                {/* <button>編集</button>   */}
+              {/* </Link> */}
             </td>
             <td>
               <button onClick={deleteStates}>削除</button>
