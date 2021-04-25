@@ -53,7 +53,7 @@ const Home = ({ children }) => {
   const updateStates = e => {
     // state.value
     <div>{e.target.value}</div>
-    console.log(updateStates)
+    console.log(e.target.value)
   }
   return (
     <>
