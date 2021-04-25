@@ -49,7 +49,7 @@ const Home = ({ children }) => {
     newTodo[index].edit = !newTodo[index].edit
     setStates(newTodo)
     // console.log({editStates})
-  }
+  } 
   const updateStates = index => {
     const newTodo = [...states]
     setStates(newTodo[1])
@@ -112,7 +112,7 @@ const Home = ({ children }) => {
               {/* {state.onClick={editStates} ? <input value={state.text[0]} /> : {state.text[0]}} */}
               {/* {1 == 1 ? <input value={state.text[0]} /> : state.text[0]} */}
               {/* {state.edit ? <input value={state.text[1]} onChange={ e => setStates(e.target.value)}/> : state.text[1]} */}
-              {state.edit ? <input value={state.text[1]} onChange={ e => setStates(e.currentTarget.value)}/> : state.text[1]}
+              {state.edit ? <input value={state.text[1]} onChange={updateStates}/> : state.text[1]}
               {/* if (state={editStates}) = {
                 return <input value={state.text[0]} />
               } else {
