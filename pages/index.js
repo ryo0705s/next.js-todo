@@ -8,7 +8,7 @@ import React, { useState, useContext } from 'react'
 // import { TestContext } from './_app'
 export const AppContext = React.createContext()
 
-const Home = ({ children }) => {
+function Home () {
   // const { test, teston } = useContext(TestContext)
   // const router = useRouter();
   const [valueTodo, setValueTodo] = useState('')
@@ -51,28 +51,15 @@ const Home = ({ children }) => {
     // console.log({editStates})
   } 
   const updateStates = e => {
-    // state.value
-    <div>{e.target.value}</div>
+    // // state.value
+    // <div>{e.target.value}</div>
     console.log(e.target.value)
+    const newTodo = [...states]
+    newTodo[0] = {text: e.target.value, complete: false, edit: false}
+    setStates(newTodo)
   }
   return (
     <>
-    <AppContext.Provider
-    value={{
-      valueTodo,
-      setValueTodo: setValueTodo,
-      valueLimit,
-      setValueLimit: setValueLimit,
-      states,
-      setStates: setStates,  
-      addTodo: addTodo,
-      handleSubmit: handleSubmit,
-      deleteStates: deleteStates,
-      changeStates: changeStates,
-      cancelStates: cancelStates,
-      editStates: editStates
-    }}
-    >
     <Layout>
     <Head>
       <title>todoアプリ</title>
@@ -80,6 +67,7 @@ const Home = ({ children }) => {
       <div>{teston}</div> */}
     </Head>
     <h1>ToDoリスト</h1>
+    {/* <div>{state.text[1]}</div> */}
     <Image 
       src='/images/profile.jpg' 
       height={180}
@@ -141,9 +129,7 @@ const Home = ({ children }) => {
         ))}
       </tbody>
     </table>
-    {children}
     </Layout>
-    </AppContext.Provider>
     </>
   )
 }
