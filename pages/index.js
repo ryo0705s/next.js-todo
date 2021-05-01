@@ -47,18 +47,19 @@ function Home () {
   // } 
   const editStates = () => {
    const newTodo = [...states]
+   newTodo[0] = {text: e.target.value, complete: false, edit: false}
    setStates(newTodo)
   } 
-  const updateValues = e => {
-    const newTodo = [...states]
-    newTodo[0] = {text: e.target.value, complete: false, edit: false}
-    setStates(newTodo)
-  }
-  const updateLimits = e => {
-    const newTodo = [...states]
-    newTodo[0] = {text: e.target.value, complete: false, edit: false}
-    setStates(newTodo)
-  }
+  // const updateValues = e => {
+  //   const newTodo = [...states]
+  //   newTodo[0] = {text: e.target.value, complete: false, edit: false}
+  //   setStates(newTodo)
+  // }
+  // const updateLimits = e => {
+  //   const newTodo = [...states]
+  //   newTodo[0] = {text: e.target.value, complete: false, edit: false}
+  //   setStates(newTodo)
+  // }
   return (
     <>
     <Layout>
@@ -130,10 +131,10 @@ function Home () {
       <tbody>
         {states && states.map((state, index) =>{
         <tr key={index}>
-          <td><input type='text' value={state.text[0]}/></td>  
-          <td><input type='text' value={state.text[1]}/></td>
+          <td>{state.text[0]}</td>  
+          <td><input type='text' value=""/></td>
         </tr>
-        })}
+         })}
       </tbody>
     </table>
     </Layout>
