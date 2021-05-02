@@ -14,6 +14,8 @@ function Home () {
   const [valueTodo, setValueTodo] = useState('')
   const [valueLimit, setValueLimit] = useState('')
   const [states, setStates] = useState([])
+  const [edit, setEdit] = useState([valueTodo, valueLimit])
+
   const addTodo= text => {
     const newTodo = [...states, {text, complete: false, edit: false}]
     setStates(newTodo)
@@ -46,9 +48,7 @@ function Home () {
   //   setStates(newTodo)
   // } 
   const editStates = () => {
-   const newTodo = [...states]
-   newTodo[0] = {text: e.target.value, complete: false, edit: false}
-   setStates(newTodo)
+    setEdit(edit)
   } 
   // const updateValues = e => {
   //   const newTodo = [...states]
@@ -77,7 +77,7 @@ function Home () {
     <input value={valueTodo} onChange={e => setValueTodo(e.target.value)}/>
     <div>期限</div>
     <input value={valueLimit} onChange={e => setValueLimit(e.target.value)}/>
-    <button value={addTodo} onClick={handleSubmit}>追加</button>
+    <button onClick={handleSubmit}>追加</button>
     <button onClick={cancelStates}>キャンセル</button>
     <table>
       <thead>
@@ -129,12 +129,12 @@ function Home () {
         </tr>
       </thead>
       <tbody>
-        {states && states.map((state, index) =>{
-        <tr key={index}>
-          <td>{state.text[0]}</td>  
-          <td><input type='text' value=""/></td>
+        {/* {states && states.map((state, index) =>{ */}
+        <tr>
+          <td>{edit[0]}</td>  
+          <td>{edit[1]}</td>
         </tr>
-         })}
+         {/* })} */}
       </tbody>
     </table>
     </Layout>
