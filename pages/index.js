@@ -49,6 +49,7 @@ function Home () {
   // } 
   const editStates = () => {
     setEdit(edit)
+    console.log({editStates})
   } 
   // const updateValues = e => {
   //   const newTodo = [...states]
