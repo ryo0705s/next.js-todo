@@ -14,7 +14,7 @@ function Home () {
   const [valueTodo, setValueTodo] = useState('')
   const [valueLimit, setValueLimit] = useState('')
   const [states, setStates] = useState([])
-  const [edit, setEdit] = useState([valueTodo, valueLimit])
+  const [edit, setEdit] = useState({text: ['', '']})
 
   const addTodo= text => {
     const newTodo = [...states, {text, complete: false, edit: false}]
@@ -47,9 +47,9 @@ function Home () {
   //   newTodo[index].edit = !newTodo[index].edit
   //   setStates(newTodo)
   // } 
-  const editStates = () => {
-    setEdit(edit)
-    console.log({editStates})
+  const editStates = (state) => {
+    setEdit(state)
+    console.log(state)
   } 
   // const updateValues = e => {
   //   const newTodo = [...states]
@@ -109,7 +109,7 @@ function Home () {
             <td>  
               {/* <Link href="/edit"> */}
                 {/* <button onClick={() => editStates(index)}>編集</button>   */}
-                <button onClick={editStates}>編集</button>  
+                <button onClick={() => editStates(state)}>編集</button>  
                 {/* <button>編集</button>   */}
               {/* </Link> */}
             </td>
@@ -132,8 +132,8 @@ function Home () {
       <tbody>
         {/* {states && states.map((state, index) =>{ */}
         <tr>
-          <td>{edit[0]}</td>  
-          <td>{edit[1]}</td>
+          <td>{edit.text[0]}</td>  
+          <td>{edit.text[1]}</td>
         </tr>
          {/* })} */}
       </tbody>
