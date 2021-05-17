@@ -42,8 +42,9 @@ function Home() {
     setEdit(state);
   };
   useEffect(() => {
-    const newStates = [...states].filter((state, index) => {
-      return state.text.indexOf(search);
+    const newTodo = [...states];
+    const newStates = newTodo.filter((state) => {
+      return state.text.indexOf(search) !== -1;
     });
     setFilteredStates(newStates);
   }, [search]);
@@ -72,8 +73,8 @@ function Home() {
         />
         <button onClick={handleSubmit}>追加</button>
         <button onClick={cancelStates}>キャンセル</button>
+        <div>検索</div>
         <input onChange={(e) => setSearch(e.target.value)} />
-        {/* <button onClick={searching}>検索</button> */}
         <table>
           <thead>
             <tr>
