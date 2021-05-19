@@ -11,6 +11,7 @@ function Home() {
   const [states, setStates] = useState([]);
   const [edit, setEdit] = useState({ text: ["", ""], edited: false });
   const [editId, setEditId] = useState("");
+  const [update, setUpdate] = useState({ text: ["", ""], upDated: false });
   const [search, setSearch] = useState("");
   const [filteredStates, setFilteredStates] = useState([]);
 
@@ -44,6 +45,14 @@ function Home() {
     setEditId(index + 1);
     state.edited = !state.edited;
   };
+  const hundleUpdate = (text, index) => {
+    text.upDated = !text.upDated;
+  };
+  const updateStates = (e, index) => {
+    setEdit(e.target.value);
+    setUpdate(e.target.value);
+  };
+
   useEffect(() => {
     const newTodo = [...states];
     const newStates = newTodo.filter((state) => {
@@ -166,8 +175,22 @@ function Home() {
           <tbody>
             <tr>
               <td>{editId}</td>
-              <td>{edit.edited ? <input value={edit.text[0]} /> : ""}</td>
+              <td>
+                {edit.edited ? (
+                  <input value={edit.text[0]} onChange={updateStates} />
+                ) : (
+                  ""
+                )}
+              </td>
               <td>{edit.edited ? <input value={edit.text[1]} /> : ""}</td>
+              <td>
+                {update.updated ? (
+                  <button onClick={hundleUpdate}>編集中</button>
+                ) : (
+                  ""
+                  // <button onClick={hundleUpdate}>編集</button>
+                )}
+              </td>
             </tr>
           </tbody>
         </table>
