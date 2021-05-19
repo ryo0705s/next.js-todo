@@ -9,7 +9,8 @@ function Home() {
   const [valueTodo, setValueTodo] = useState("");
   const [valueLimit, setValueLimit] = useState("");
   const [states, setStates] = useState([]);
-  const [edit, setEdit] = useState({ text: ["", ""] });
+  const [edit, setEdit] = useState({ text: ["", ""], edited: false });
+  const [editId, setEditId] = useState("");
   const [search, setSearch] = useState("");
   const [filteredStates, setFilteredStates] = useState([]);
 
@@ -38,15 +39,19 @@ function Home() {
     setValueTodo("");
     setValueLimit("");
   };
-  const editStates = (state) => {
+  const editStates = (state, index) => {
     setEdit(state);
+    setEditId(index + 1);
+    state.edited = !state.edited;
   };
   useEffect(() => {
-    const newStates = [...states].filter((state, index) => {
-      return state.text.indexOf(search);
+    const newTodo = [...states];
+    const newStates = newTodo.filter((state) => {
+      return state.text.indexOf(search) !== -1;
     });
     setFilteredStates(newStates);
   }, [search]);
+
   return (
     <>
       <Layout>
@@ -72,8 +77,8 @@ function Home() {
         />
         <button onClick={handleSubmit}>追加</button>
         <button onClick={cancelStates}>キャンセル</button>
+        <div>検索</div>
         <input onChange={(e) => setSearch(e.target.value)} />
-        {/* <button onClick={searching}>検索</button> */}
         <table>
           <thead>
             <tr>
@@ -84,7 +89,7 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {!filteredStates
+            {search === ""
               ? states.map((state, index) => {
                   return (
                     <tr key={index}>
@@ -105,7 +110,9 @@ function Home() {
                       <td>
                         {/* <Link href="/edit"> */}
                         {/* <button onClick={() => editStates(index)}>編集</button>   */}
-                        <button onClick={() => editStates(state)}>編集</button>
+                        <button onClick={() => editStates(state, index)}>
+                          編集
+                        </button>
                         {/* <button>編集</button>   */}
                         {/* </Link> */}
                       </td>
@@ -157,12 +164,11 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {/* {states && states.map((state, index) =>{ */}
             <tr>
-              <td>{edit.text[0]}</td>
-              <td>{edit.text[1]}</td>
+              <td>{editId}</td>
+              <td>{edit.edited ? <input value={edit.text[0]} /> : ""}</td>
+              <td>{edit.edited ? <input value={edit.text[1]} /> : ""}</td>
             </tr>
-            {/* })} */}
           </tbody>
         </table>
       </Layout>
