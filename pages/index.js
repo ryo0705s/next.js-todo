@@ -11,7 +11,7 @@ function Home() {
   const [states, setStates] = useState([]);
   const [edit, setEdit] = useState({ text: ["", ""], edited: false });
   const [editId, setEditId] = useState("");
-  const [update, setUpdate] = useState({ text: ["", ""], upDated: false });
+  const [update, setUpdate] = useState({ text: ["", ""] });
   const [search, setSearch] = useState("");
   const [filteredStates, setFilteredStates] = useState([]);
 
@@ -45,12 +45,12 @@ function Home() {
     setEditId(index + 1);
     state.edited = !state.edited;
   };
-  const hundleUpdate = (text, index) => {
-    text.upDated = !text.upDated;
-  };
-  const updateStates = (e, index) => {
-    setEdit(e.target.value);
-    setUpdate(e.target.value);
+  // const hundleUpdate = (text, index) => {
+  //   text.upDated = !text.upDated;
+  // };
+  const updateStates = (edit, index) => {
+    setUpdate(edit[1]);
+    console.log(updateStates);
   };
 
   useEffect(() => {
@@ -177,20 +177,23 @@ function Home() {
               <td>{editId}</td>
               <td>
                 {edit.edited ? (
-                  <input value={edit.text[0]} onChange={updateStates} />
+                  <input
+                    value={edit.text[0]}
+                    onChange={() => updateStates(edit)}
+                  />
                 ) : (
                   ""
                 )}
               </td>
               <td>{edit.edited ? <input value={edit.text[1]} /> : ""}</td>
-              <td>
+              {/* <td>
                 {update.updated ? (
                   <button onClick={hundleUpdate}>編集中</button>
                 ) : (
                   ""
                   // <button onClick={hundleUpdate}>編集</button>
                 )}
-              </td>
+              </td> */}
             </tr>
           </tbody>
         </table>
