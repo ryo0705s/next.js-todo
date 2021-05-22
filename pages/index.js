@@ -11,7 +11,7 @@ function Home() {
   const [states, setStates] = useState([]);
   const [edit, setEdit] = useState({ text: ["", ""], edited: false });
   const [editId, setEditId] = useState("");
-  const [update, setUpdate] = useState({ text: ["", ""] });
+  const [update, setUpdate] = useState(false);
   const [search, setSearch] = useState("");
   const [filteredStates, setFilteredStates] = useState([]);
 
@@ -49,7 +49,7 @@ function Home() {
   //   text.upDated = !text.upDated;
   // };
   const updateStates = (edit, index) => {
-    setUpdate(edit[1]);
+    setUpdate(edit);
     console.log(updateStates);
   };
 
@@ -177,10 +177,17 @@ function Home() {
               <td>{editId}</td>
               <td>
                 {edit.edited ? (
-                  <input
-                    value={edit.text[0]}
-                    onChange={() => updateStates(edit)}
-                  />
+                  update ? (
+                    <input
+                      value={update.text}
+                      onChange={(e) => setUpdate(e.target.value)}
+                    />
+                  ) : (
+                    <input
+                      value={edit.text[0]}
+                      onChange={() => updateStates(edit)}
+                    />
+                  )
                 ) : (
                   ""
                 )}
