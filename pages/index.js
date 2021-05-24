@@ -11,14 +11,14 @@ function Home() {
   const [states, setStates] = useState([]);
   const [edit, setEdit] = useState({ text: ["", ""], edited: false });
   const [editId, setEditId] = useState("");
-  const [update, setUpdate] = useState(false);
+  const [update, setUpdate] = useState({ text: ["", ""] });
   const [search, setSearch] = useState("");
   const [filteredStates, setFilteredStates] = useState([]);
 
   const addTodo = (text) => {
     const newTodo = [
       ...states,
-      { text, complete: false, edit: false, searched: false },
+      { text, complete: false, edited: false, searched: false },
     ];
     setStates(newTodo);
   };
@@ -41,6 +41,10 @@ function Home() {
     setValueLimit("");
   };
   const editStates = (state, index) => {
+    // const newTodo = [...states];
+    // newTodo.filter((state) => {
+    //   return state;
+    // });
     setEdit(state);
     setEditId(index + 1);
     state.edited = !state.edited;
@@ -48,10 +52,29 @@ function Home() {
   // const hundleUpdate = (text, index) => {
   //   text.upDated = !text.upDated;
   // };
+  // const updateStates = (edition, index) => {
+  //   const newEdit = [...states, edition];
+  //   setUpdate(newEdit[0]);
+  //   console.log(updateStates);
   const updateStates = (edit, index) => {
-    setUpdate(edit);
+    const newEdit = [...states];
+    newEdit[index] = { text: [edit[0], edit[1]], edited: true };
+    setEdit(newEdit[index]);
     console.log(updateStates);
   };
+  const finishEdit = (edit, index) => {
+    const newEdit = [...states];
+    newEdit[index] = { text: [edit[0], edit[1]], edited: false };
+    // newEdit[index].edited === !newEdit[index].edited;
+    setEdit(newEdit[index]);
+    setUpdate(newEdit[index]);
+    console.log(finishEdit);
+  };
+  // const updateValues = e => {
+  //   const newTodo = [...states]
+  //   newTodo[index].edit = !newTodo[index].edit
+  //   newTodo[0] = {text: e.target.value, complete: false, edit: false}
+  //   setStates(newTodo)
 
   useEffect(() => {
     const newTodo = [...states];
@@ -107,7 +130,7 @@ function Home() {
                         {/* {state.edit ? <input type='text' value={state.text[0]} onChange={updateValues}/> : state.text[0]} */}
                         {state.text[0]}
                       </td>
-                      <td className={states.searched ? "searched" : null}>
+                      <td>
                         {/* {state.edit ? <input type='text' value={state.text[1]} onChange={updateLimits}/> : state.text[1]} */}
                         {state.text[1]}
                       </td>
@@ -175,11 +198,11 @@ function Home() {
           <tbody>
             <tr>
               <td>{editId}</td>
-              <td>
+              {/* <td>
                 {edit.edited ? (
                   update ? (
                     <input
-                      value={update.text}
+                      value={update.text[0]}
                       onChange={(e) => setUpdate(e.target.value)}
                     />
                   ) : (
@@ -191,16 +214,28 @@ function Home() {
                 ) : (
                   ""
                 )}
-              </td>
-              <td>{edit.edited ? <input value={edit.text[1]} /> : ""}</td>
-              {/* <td>
-                {update.updated ? (
-                  <button onClick={hundleUpdate}>編集中</button>
+              </td> */}
+              <td>
+                {edit.edited ? (
+                  <input
+                    value={edit.text[0]}
+                    // onChange={() => updateStates(edit)}
+                    onChange={updateStates}
+                  />
                 ) : (
                   ""
-                  // <button onClick={hundleUpdate}>編集</button>
                 )}
-              </td> */}
+              </td>
+              <td>
+                {edit.edited ? (
+                  <input value={edit.text[1]} onChange={updateStates} />
+                ) : (
+                  ""
+                )}
+              </td>
+              <td>
+                {edit.edited ? <button onClick={finishEdit}>完了</button> : ""}
+              </td>
             </tr>
           </tbody>
         </table>
