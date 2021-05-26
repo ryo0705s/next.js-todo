@@ -48,8 +48,9 @@ function Home() {
     state.edited = !state.edited;
   };
   const updateStates = (e) => {
-    const newEdit = { text: [e.target.value], edited: true };
-    setEdit(newEdit);
+    const newEdit = { text: [editValue, editLimit], edited: true };
+    setEditValue(newEdit.text[0]);
+    setEditLimit(newEdit.text[1]);
     console.log(updateStates);
   };
 
@@ -177,14 +178,20 @@ function Home() {
               <td>{editId}</td>
               <td>
                 {edit.edited ? (
-                  <input value={edit.text[0]} onChange={updateStates} />
+                  <input
+                    value={edit.text[0] === editValue.text}
+                    onChange={updateStates}
+                  />
                 ) : (
                   ""
                 )}
               </td>
               <td>
                 {edit.edited ? (
-                  <input value={edit.text[1]} onChange={updateStates} />
+                  <input
+                    value={edit.text[1] === editLimit.text}
+                    onChange={updateStates}
+                  />
                 ) : (
                   ""
                 )}
