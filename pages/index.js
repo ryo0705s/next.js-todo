@@ -10,10 +10,10 @@ function Home() {
   const [valueLimit, setValueLimit] = useState("");
   const [states, setStates] = useState([]);
   const [edit, setEdit] = useState({ text: ["", ""], edited: false });
-  const [editValue, setEditValue] = useState({ text: "", edited: false });
-  const [editLimit, setEditLimit] = useState({ text: "", edited: false });
+  const [editValue, setEditValue] = useState({ text: "" });
+  const [editLimit, setEditLimit] = useState({ text: "" });
   const [editId, setEditId] = useState("");
-  const [update, setUpdate] = useState({ text: ["", ""] });
+  const [update, setUpdate] = useState({ text: ["", ""], updated: false });
   const [search, setSearch] = useState("");
   const [filteredStates, setFilteredStates] = useState([]);
 
@@ -47,11 +47,20 @@ function Home() {
     setEditId(index + 1);
     state.edited = !state.edited;
   };
-  const updateStates = (e) => {
-    const newEdit = { text: [editValue, editLimit], edited: true };
-    setEditValue(newEdit.text[0]);
-    setEditLimit(newEdit.text[1]);
-    console.log(updateStates);
+  // const updateStates = (e) => {
+  //   // const newEdit = { text: [editValue, editLimit], edited: true };
+  //   setEditValue(e.target.value);
+  //   setEditLimit(e.target.value);
+  //   console.log(updateStates);
+  // };
+  const handleUpdate = () => {
+    const newEdit = [editValue, editLimit];
+    setUpdate(newEdit);
+    // newEdit.edited === !newEdit.edited;
+    update.updated === !update.updated;
+    edit.edited === !edit.edited;
+
+    console.log(handleUpdate);
   };
 
   useEffect(() => {
@@ -105,12 +114,10 @@ function Home() {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>
-                        {/* {state.edit ? <input type='text' value={state.text[0]} onChange={updateValues}/> : state.text[0]} */}
-                        {state.text[0]}
+                        {!update.updated ? state.text[0] : editValue.text}
                       </td>
                       <td>
-                        {/* {state.edit ? <input type='text' value={state.text[1]} onChange={updateLimits}/> : state.text[1]} */}
-                        {state.text[1]}
+                        {!update.updated ? state.text[1] : editLimit.text}
                       </td>
                       <td>
                         <button onClick={() => changeStates(index)}>
@@ -136,12 +143,8 @@ function Home() {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>
-                        {/* {state.edit ? <input type='text' value={state.text[0]} onChange={updateValues}/> : state.text[0]} */}
-                        {state.text[0]}
-                      </td>
+                      <td>{state.text[0]}</td>
                       <td className={states.searched ? "searched" : null}>
-                        {/* {state.edit ? <input type='text' value={state.text[1]} onChange={updateLimits}/> : state.text[1]} */}
                         {state.text[1]}
                       </td>
                       <td>
@@ -177,39 +180,37 @@ function Home() {
             <tr>
               <td>{editId}</td>
               <td>
-                {edit.edited ? (
+                {edit.edited || update.updated ? (
                   <input
-                    value={edit.text[0] === editValue.text}
-                    onChange={updateStates}
+                    value={editValue.text}
+                    placeholder={edit.text[0]}
+                    onChange={(e) => setEditValue(e.target.value)}
                   />
                 ) : (
                   ""
                 )}
               </td>
               <td>
-                {edit.edited ? (
+                {edit.edited || update.updated ? (
                   <input
-                    value={edit.text[1] === editLimit.text}
-                    onChange={updateStates}
+                    value={editLimit.text}
+                    placeholder={edit.text[1]}
+                    onChange={(e) => setEditLimit(e.target.value)}
                   />
                 ) : (
                   ""
                 )}
               </td>
               <td>
-                {edit.edited ? (
-                  <button onClick={updateStates}>更新</button>
+                {edit.edited || update.updated ? (
+                  <button onClick={handleUpdate}>更新</button>
                 ) : (
                   ""
                 )}
               </td>
-              {/* <td>
-                {editValue.edited && editLImit.edited ? (
-                  <button onClick={finishEdit}>完了</button>
-                ) : (
-                  ""
-                )}
-              </td> */}
+              <td>
+                <input value={update.text} />
+              </td>
             </tr>
           </tbody>
         </table>
