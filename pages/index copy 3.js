@@ -9,15 +9,15 @@ function Home() {
   const [valueTodo, setValueTodo] = useState("");
   const [valueLimit, setValueLimit] = useState("");
   const [states, setStates] = useState([]);
-  const [edit, setEdit] = useState({ text: ["", ""] });
+  const [edit1, setEdit1] = useState({ text: ["", ""], edited: false });
+  const [edit2, setEdit2] = useState({ text: ["", ""], edited: false });
+  const [editId, setEditId] = useState("");
+  const [update, setUpdate] = useState({ text: ["", ""] });
   const [search, setSearch] = useState("");
   const [filteredStates, setFilteredStates] = useState([]);
 
   const addTodo = (text) => {
-    const newTodo = [
-      ...states,
-      { text, complete: false, edit: false, searched: false },
-    ];
+    const newTodo = [...states, { text, complete: false, searched: false }];
     setStates(newTodo);
   };
   const handleSubmit = (e) => {
@@ -38,9 +38,40 @@ function Home() {
     setValueTodo("");
     setValueLimit("");
   };
-  const editStates = (state) => {
+  const editStates = (state, index) => {
+    // const newTodo = [...states];
+    // newTodo.filter((state) => {
+    //   return state;
+    // });
     setEdit(state);
+    setEditId(index + 1);
+    state.edited = !state.edited;
   };
+  // const hundleUpdate = (text, index) => {
+  //   text.upDated = !text.upDated;
+  // };
+  // const updateStates = (edition, index) => {
+  //   const newEdit = [...states, edition];
+  //   setUpdate(newEdit[0]);
+  //   console.log(updateStates);
+  const updateEdits = (e) => {
+    // const edition = { text: [edit[0], edit[1]], edited: true };
+    setEdit(e.target.value);
+    // console.log(updateStates);
+  };
+  const finishEdit = () => {
+    edition = { text: edit1, edit2, edited: false };
+    edition.edited === !edition.edited;
+    setEdit(edition);
+    setUpdate(edition);
+    console.log(finishEdit);
+  };
+  // const updateValues = e => {
+  //   const newTodo = [...states]
+  //   newTodo[index].edit = !newTodo[index].edit
+  //   newTodo[0] = {text: e.target.value, complete: false, edit: false}
+  //   setStates(newTodo)
+
   useEffect(() => {
     const newTodo = [...states];
     const newStates = newTodo.filter((state) => {
@@ -48,6 +79,7 @@ function Home() {
     });
     setFilteredStates(newStates);
   }, [search]);
+
   return (
     <>
       <Layout>
@@ -85,18 +117,18 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {!filteredStates
+            {search === ""
               ? states.map((state, index) => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>
                         {/* {state.edit ? <input type='text' value={state.text[0]} onChange={updateValues}/> : state.text[0]} */}
-                        {!update ? state.text[0] : edit.text[0]}
+                        {state.text[0]}
                       </td>
-                      <td className={states.searched ? "searched" : null}>
+                      <td>
                         {/* {state.edit ? <input type='text' value={state.text[1]} onChange={updateLimits}/> : state.text[1]} */}
-                        {!update ? state.text[1] : edit.text[1]}
+                        {state.text[1]}
                       </td>
                       <td>
                         <button onClick={() => changeStates(index)}>
@@ -106,7 +138,9 @@ function Home() {
                       <td>
                         {/* <Link href="/edit"> */}
                         {/* <button onClick={() => editStates(index)}>編集</button>   */}
-                        <button onClick={() => editStates(state)}>編集</button>
+                        <button onClick={() => editStates(state, index)}>
+                          編集
+                        </button>
                         {/* <button>編集</button>   */}
                         {/* </Link> */}
                       </td>
@@ -158,12 +192,47 @@ function Home() {
             </tr>
           </thead>
           <tbody>
-            {/* {states && states.map((state, index) =>{ */}
             <tr>
-              <td>{edit.text[0]}</td>
-              <td>{edit.text[1]}</td>
+              <td>{editId}</td>
+              {/* <td>
+                {edit.edited ? (
+                  update ? (
+                    <input
+                      value={update.text[0]}
+                      onChange={(e) => setUpdate(e.target.value)}
+                    />
+                  ) : (
+                    <input
+                      value={edit.text[0]}
+                      onChange={() => updateStates(edit)}
+                    />
+                  )
+                ) : (
+                  ""
+                )}
+              </td> */}
+              <td>
+                {edit.edited ? (
+                  <input
+                    value={edit.text[0]}
+                    // onChange={() => updateStates(edit)}
+                    onChange={updateStates}
+                  />
+                ) : (
+                  ""
+                )}
+              </td>
+              <td>
+                {edit.edited ? (
+                  <input value={edit.text[1]} onChange={() => updateEdits()} />
+                ) : (
+                  ""
+                )}
+              </td>
+              <td>
+                {edit.edited ? <button onClick={finishEdit}>完了</button> : ""}
+              </td>
             </tr>
-            {/* })} */}
           </tbody>
         </table>
       </Layout>

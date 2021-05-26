@@ -9,7 +9,8 @@ function Home() {
   const [valueTodo, setValueTodo] = useState("");
   const [valueLimit, setValueLimit] = useState("");
   const [states, setStates] = useState([]);
-  const [edit, setEdit] = useState({ text: ["", ""], edited: false });
+  const [editValue, setEditValue] = useState({ text: "", edited: false });
+  const [editLimit, setEditLimit] = useState({ text: "", edited: false });
   const [editId, setEditId] = useState("");
   const [update, setUpdate] = useState({ text: ["", ""] });
   const [search, setSearch] = useState("");
@@ -45,9 +46,11 @@ function Home() {
     // newTodo.filter((state) => {
     //   return state;
     // });
-    setEdit(state);
+    setEditValue(state);
+    // setEditLimit(state[1]);
     setEditId(index + 1);
     state.edited = !state.edited;
+    console.log(editStates);
   };
   // const hundleUpdate = (text, index) => {
   //   text.upDated = !text.upDated;
@@ -56,20 +59,25 @@ function Home() {
   //   const newEdit = [...states, edition];
   //   setUpdate(newEdit[0]);
   //   console.log(updateStates);
-  const updateStates = (edit, index) => {
-    const newEdit = [...states];
-    newEdit[index] = { text: [edit[0], edit[1]], edited: true };
-    setEdit(newEdit[index]);
-    console.log(updateStates);
+  const updateStates = () => {
+    // const newEdit = [...states];
+    // edition = { text: [edit[0], edit[1]], edited: true };
+    // const edition = {
+    //   text: e.target.value,
+    //   edited: true,
+    // };
+    setEditValue(e.target.value);
+    // setEditLimit(e.target.value);
+
+    // console.log(updateStates);
   };
-  const finishEdit = (edit, index) => {
-    const newEdit = [...states];
-    newEdit[index] = { text: [edit[0], edit[1]], edited: false };
-    // newEdit[index].edited === !newEdit[index].edited;
-    setEdit(newEdit[index]);
-    setUpdate(newEdit[index]);
-    console.log(finishEdit);
-  };
+  // const finishEdit = (edition, index) => {
+  //   edition = { text: [edit[0], edit[1]], edited: false };
+  //   edition.edited === !edition.edited;
+  //   setEdit(edition);
+  //   setUpdate(edition);
+  //   console.log(finishEdit);
+  // };
   // const updateValues = e => {
   //   const newTodo = [...states]
   //   newTodo[index].edit = !newTodo[index].edit
@@ -142,9 +150,7 @@ function Home() {
                       <td>
                         {/* <Link href="/edit"> */}
                         {/* <button onClick={() => editStates(index)}>編集</button>   */}
-                        <button onClick={() => editStates(state, index)}>
-                          編集
-                        </button>
+                        <button onClick={() => editStates(state)}>編集</button>
                         {/* <button>編集</button>   */}
                         {/* </Link> */}
                       </td>
@@ -216,26 +222,25 @@ function Home() {
                 )}
               </td> */}
               <td>
-                {edit.edited ? (
-                  <input
-                    value={edit.text[0]}
-                    // onChange={() => updateStates(edit)}
-                    onChange={updateStates}
-                  />
+                {editValue.edited ? <input value={editValue.text} /> : ""}
+              </td>
+              <td>
+                {editLimit.edited ? <input value={editLimit.text} /> : ""}
+              </td>
+              <td>
+                {editValue.edited && editLimit.edited ? (
+                  <button onClick={updateStates}>更新</button>
                 ) : (
                   ""
                 )}
               </td>
-              <td>
-                {edit.edited ? (
-                  <input value={edit.text[1]} onChange={updateStates} />
+              {/* <td>
+                {editValue.edited && editLImit.edited ? (
+                  <button onClick={finishEdit}>完了</button>
                 ) : (
                   ""
                 )}
-              </td>
-              <td>
-                {edit.edited ? <button onClick={finishEdit}>完了</button> : ""}
-              </td>
+              </td> */}
             </tr>
           </tbody>
         </table>
