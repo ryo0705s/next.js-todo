@@ -10,9 +10,9 @@ function Home() {
   const [valueLimit, setValueLimit] = useState("");
   const [todos, setTodos] = useState([]);
 
-  const [edit, setEdit] = useState({ text: ["", ""], edited: false });
   const [editValue, setEditValue] = useState({ text: "" });
   const [editLimit, setEditLimit] = useState({ text: "" });
+  const [edit, setEdit] = useState({ text: ["", ""], edited: false });
   const [editId, setEditId] = useState("");
 
   const [update, setUpdate] = useState({ text: ["", ""], updated: false });

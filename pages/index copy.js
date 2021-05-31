@@ -1,209 +1,208 @@
-import Head from 'next/head'
+import Link from "next/link";
+import Image from "next/image";
+import Head from "next/head";
+import Layout from "../components/layout";
+import React, { useState, useEffect } from "react";
+export const AppContext = React.createContext();
 
-export default function Home() {
+function Home() {
+  const [valueTodo, setValueTodo] = useState("");
+  const [valueLimit, setValueLimit] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  const [editValue, setEditValue] = useState({ text: "" });
+  const [editLimit, setEditLimit] = useState({ text: "" });
+  const [edit, setEdit] = useState({ text: ["", ""], edited: false });
+  const [editId, setEditId] = useState("");
+
+  const [update, setUpdate] = useState({ text: ["", ""], updated: false });
+
+  const [search, setSearch] = useState("");
+  const [filteredStates, setFilteredStates] = useState([]);
+
+  const addTodo = (text) => {
+    const newTodo = [
+      ...todos,
+      { text, complete: false, edited: false, searched: false },
+    ];
+    setTodos(newTodo);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addTodo([valueTodo, valueLimit]);
+    setValueTodo("");
+    setValueLimit("");
+  };
+  const deleteStates = (index) => {
+    const newTodo = [...todos];
+    newTodo.splice(index, 1);
+    setTodos(newTodo);
+  };
+  const changeTodos = (index) => {
+    const newTodo = [...todos];
+    newTodo[index].complete = !newTodo[index].complete;
+    setTodos(newTodo);
+  };
+  const cancelTodos = () => {
+    setValueTodo("");
+    setValueLimit("");
+  };
+  const editTodos = (todo, index) => {
+    setEdit(todo);
+    setEditId(index + 1);
+    todo.edited = !todo.edited;
+  };
+  const handleUpdate = () => {
+    const newEdit = { text: [editValue, editLimit], updated: true };
+    setUpdate(newEdit);
+  };
+
+  useEffect(() => {
+    const newTodo = [...todos];
+    const newStates = newTodo.filter((todo) => {
+      return todo.text.indexOf(search) !== -1;
+    });
+    setFilteredStates(newStates);
+  }, [search]);
+
   return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        .container {
-          min-height: 100vh;
-          padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer img {
-          margin-left: 0.5rem;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
-        .title a {
-          color: #0070f3;
-          text-decoration: none;
-        }
-
-        .title a:hover,
-        .title a:focus,
-        .title a:active {
-          text-decoration: underline;
-        }
-
-        .title {
-          margin: 0;
-          line-height: 1.15;
-          font-size: 4rem;
-        }
-
-        .title,
-        .description {
-          text-align: center;
-        }
-
-        .description {
-          line-height: 1.5;
-          font-size: 1.5rem;
-        }
-
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        .card {
-          margin: 1rem;
-          flex-basis: 45%;
-          padding: 1.5rem;
-          text-align: left;
-          color: inherit;
-          text-decoration: none;
-          border: 1px solid #eaeaea;
-          border-radius: 10px;
-          transition: color 0.15s ease, border-color 0.15s ease;
-        }
-
-        .card:hover,
-        .card:focus,
-        .card:active {
-          color: #0070f3;
-          border-color: #0070f3;
-        }
-
-        .card h3 {
-          margin: 0 0 1rem 0;
-          font-size: 1.5rem;
-        }
-
-        .card p {
-          margin: 0;
-          font-size: 1.25rem;
-          line-height: 1.5;
-        }
-
-        .logo {
-          height: 1em;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )
+    <>
+      <Layout>
+        <Head>
+          <title>todoアプリ</title>
+        </Head>
+        <h1>ToDoリスト</h1>
+        <Image
+          src="/images/profile.jpg"
+          height={180}
+          width={180}
+          alt="top画像"
+        />
+        <div>やる事</div>
+        <input
+          value={valueTodo}
+          onChange={(e) => setValueTodo(e.target.value)}
+        />
+        <div>期限</div>
+        <input
+          value={valueLimit}
+          onChange={(e) => setValueLimit(e.target.value)}
+        />
+        <button onClick={handleSubmit}>追加</button>
+        <button onClick={cancelTodos}>キャンセル</button>
+        <div>検索</div>
+        <input onChange={(e) => setSearch(e.target.value)} />
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>やる事</th>
+              <th>期限</th>
+              <th>状態</th>
+            </tr>
+          </thead>
+          <tbody>
+            {search === ""
+              ? todos.map((todo, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>
+                        {update.updated && index + 1 === editId
+                          ? update.text[0]
+                          : todo.text[0]}
+                      </td>
+                      <td>
+                        {update.updated && index + 1 === editId
+                          ? update.text[1]
+                          : todo.text[1]}
+                      </td>
+                      <td>
+                        <button onClick={() => changeTodos(index)}>
+                          {todo.complete ? "完了" : "未完了"}
+                        </button>
+                      </td>
+                      <td>
+                        <button onClick={() => editTodos(todo, index)}>
+                          編集
+                        </button>
+                      </td>
+                      <td>
+                        <button onClick={deleteStates}>削除</button>
+                      </td>
+                    </tr>
+                  );
+                })
+              : filteredStates.map((todo, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{todo.text[0]}</td>
+                      <td className={todos.searched ? "searched" : null}>
+                        {todo.text[1]}
+                      </td>
+                      <td>
+                        <button onClick={() => changeTodos(index)}>
+                          {todo.complete ? "完了" : "未完了"}
+                        </button>
+                      </td>
+                      <td>
+                        <button onClick={() => editTodos(todo)}>編集</button>
+                      </td>
+                      <td>
+                        <button onClick={deleteStates}>削除</button>
+                      </td>
+                    </tr>
+                  );
+                })}
+          </tbody>
+        </table>
+        <table>
+          <thead>
+            <h2>編集中</h2>
+            <tr>
+              <th>ID</th>
+              <th>やること</th>
+              <th>期限</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{edit.edited && !update.updated ? editId : ""}</td>
+              <td>
+                {edit.edited && !update.updated ? (
+                  <input
+                    value={editValue.text}
+                    placeholder={edit.text[0]}
+                    onChange={(e) => setEditValue(e.target.value)}
+                  />
+                ) : (
+                  ""
+                )}
+              </td>
+              <td>
+                {edit.edited && !update.updated ? (
+                  <input
+                    value={editLimit.text}
+                    placeholder={edit.text[1]}
+                    onChange={(e) => setEditLimit(e.target.value)}
+                  />
+                ) : (
+                  ""
+                )}
+              </td>
+              <td>
+                {edit.edited && !update.updated ? (
+                  <button onClick={handleUpdate}>更新</button>
+                ) : (
+                  ""
+                )}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </Layout>
+    </>
+  );
 }
+export default Home;
