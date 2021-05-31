@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Head from "next/head";
 import Layout from "../components/layout";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 export const AppContext = React.createContext();
 
 function Home() {
@@ -27,6 +27,8 @@ function Home() {
   const handleSubmit = (e) => {
     e.preventDefault();
     addTodo([valueTodo, valueLimit]);
+    setValueTodo("");
+    setValueLimit("");
   };
   const deleteStates = (index) => {
     const newTodo = [...states];
@@ -47,20 +49,9 @@ function Home() {
     setEditId(index + 1);
     state.edited = !state.edited;
   };
-  // const updateStates = (e) => {
-  //   // const newEdit = { text: [editValue, editLimit], edited: true };
-  //   setEditValue(e.target.value);
-  //   setEditLimit(e.target.value);
-  //   console.log(updateStates);
-  // };
   const handleUpdate = () => {
-    const newEdit = [editValue, editLimit];
+    const newEdit = { text: [editValue, editLimit], updated: true };
     setUpdate(newEdit);
-    // newEdit.edited === !newEdit.edited;
-    update.updated === !update.updated;
-    edit.edited === !edit.edited;
-
-    console.log(handleUpdate);
   };
 
   useEffect(() => {
@@ -114,10 +105,14 @@ function Home() {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>
-                        {!update.updated ? state.text[0] : editValue.text}
+                        {update.updated && index === editId
+                          ? update.text[0]
+                          : state.text[0]}
                       </td>
                       <td>
-                        {!update.updated ? state.text[1] : editLimit.text}
+                        {update.updated && index === editId
+                          ? update.text[1]
+                          : state.text[1]}
                       </td>
                       <td>
                         <button onClick={() => changeStates(index)}>
@@ -125,13 +120,9 @@ function Home() {
                         </button>
                       </td>
                       <td>
-                        {/* <Link href="/edit"> */}
-                        {/* <button onClick={() => editStates(index)}>編集</button>   */}
                         <button onClick={() => editStates(state, index)}>
                           編集
                         </button>
-                        {/* <button>編集</button>   */}
-                        {/* </Link> */}
                       </td>
                       <td>
                         <button onClick={deleteStates}>削除</button>
@@ -153,11 +144,7 @@ function Home() {
                         </button>
                       </td>
                       <td>
-                        {/* <Link href="/edit"> */}
-                        {/* <button onClick={() => editStates(index)}>編集</button>   */}
                         <button onClick={() => editStates(state)}>編集</button>
-                        {/* <button>編集</button>   */}
-                        {/* </Link> */}
                       </td>
                       <td>
                         <button onClick={deleteStates}>削除</button>
@@ -178,9 +165,9 @@ function Home() {
           </thead>
           <tbody>
             <tr>
-              <td>{editId}</td>
+              <td>{edit.edited && !update.updated ? editId : ""}</td>
               <td>
-                {edit.edited || update.updated ? (
+                {edit.edited && !update.updated ? (
                   <input
                     value={editValue.text}
                     placeholder={edit.text[0]}
@@ -191,7 +178,7 @@ function Home() {
                 )}
               </td>
               <td>
-                {edit.edited || update.updated ? (
+                {edit.edited && !update.updated ? (
                   <input
                     value={editLimit.text}
                     placeholder={edit.text[1]}
@@ -202,14 +189,11 @@ function Home() {
                 )}
               </td>
               <td>
-                {edit.edited || update.updated ? (
+                {edit.edited && !update.updated ? (
                   <button onClick={handleUpdate}>更新</button>
                 ) : (
                   ""
                 )}
-              </td>
-              <td>
-                <input value={update.text} />
               </td>
             </tr>
           </tbody>
