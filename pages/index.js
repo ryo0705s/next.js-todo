@@ -105,12 +105,12 @@ function Home() {
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>
-                        {update.updated && index === editId
+                        {update.updated && index + 1 === editId
                           ? update.text[0]
                           : state.text[0]}
                       </td>
                       <td>
-                        {update.updated && index === editId
+                        {update.updated && index + 1 === editId
                           ? update.text[1]
                           : state.text[1]}
                       </td>
