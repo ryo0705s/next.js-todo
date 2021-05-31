@@ -8,7 +8,7 @@ export const AppContext = React.createContext();
 function Home() {
   const [valueTodo, setValueTodo] = useState("");
   const [valueLimit, setValueLimit] = useState("");
-  const [states, setStates] = useState([]);
+  const [todos, setTodos] = useState([]);
   const [edit, setEdit] = useState({ text: ["", ""], edited: false });
   const [editValue, setEditValue] = useState({ text: "" });
   const [editLimit, setEditLimit] = useState({ text: "" });
@@ -19,10 +19,10 @@ function Home() {
 
   const addTodo = (text) => {
     const newTodo = [
-      ...states,
+      ...todos,
       { text, complete: false, edited: false, searched: false },
     ];
-    setStates(newTodo);
+    setTodos(newTodo);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,23 +31,23 @@ function Home() {
     setValueLimit("");
   };
   const deleteStates = (index) => {
-    const newTodo = [...states];
+    const newTodo = [...todos];
     newTodo.splice(index, 1);
-    setStates(newTodo);
+    setTodos(newTodo);
   };
   const changeStates = (index) => {
-    const newTodo = [...states];
+    const newTodo = [...todos];
     newTodo[index].complete = !newTodo[index].complete;
-    setStates(newTodo);
+    setTodos(newTodo);
   };
   const cancelStates = () => {
     setValueTodo("");
     setValueLimit("");
   };
-  const editStates = (state, index) => {
-    setEdit(state);
+  const editStates = (todo, index) => {
+    setEdit(todo);
     setEditId(index + 1);
-    state.edited = !state.edited;
+    todo.edited = !todo.edited;
   };
   const handleUpdate = () => {
     const newEdit = { text: [editValue, editLimit], updated: true };
@@ -55,9 +55,9 @@ function Home() {
   };
 
   useEffect(() => {
-    const newTodo = [...states];
-    const newStates = newTodo.filter((state) => {
-      return state.text.indexOf(search) !== -1;
+    const newTodo = [...todos];
+    const newStates = newTodo.filter((todo) => {
+      return todo.text.indexOf(search) !== -1;
     });
     setFilteredStates(newStates);
   }, [search]);
@@ -100,27 +100,27 @@ function Home() {
           </thead>
           <tbody>
             {search === ""
-              ? states.map((state, index) => {
+              ? todos.map((todo, index) => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>
                         {update.updated && index + 1 === editId
                           ? update.text[0]
-                          : state.text[0]}
+                          : todo.text[0]}
                       </td>
                       <td>
                         {update.updated && index + 1 === editId
                           ? update.text[1]
-                          : state.text[1]}
+                          : todo.text[1]}
                       </td>
                       <td>
                         <button onClick={() => changeStates(index)}>
-                          {state.complete ? "完了" : "未完了"}
+                          {todo.complete ? "完了" : "未完了"}
                         </button>
                       </td>
                       <td>
-                        <button onClick={() => editStates(state, index)}>
+                        <button onClick={() => editStates(todo, index)}>
                           編集
                         </button>
                       </td>
@@ -130,21 +130,21 @@ function Home() {
                     </tr>
                   );
                 })
-              : filteredStates.map((state, index) => {
+              : filteredStates.map((todo, index) => {
                   return (
                     <tr key={index}>
                       <td>{index + 1}</td>
-                      <td>{state.text[0]}</td>
-                      <td className={states.searched ? "searched" : null}>
-                        {state.text[1]}
+                      <td>{todo.text[0]}</td>
+                      <td className={todos.searched ? "searched" : null}>
+                        {todo.text[1]}
                       </td>
                       <td>
                         <button onClick={() => changeStates(index)}>
-                          {state.complete ? "完了" : "未完了"}
+                          {todo.complete ? "完了" : "未完了"}
                         </button>
                       </td>
                       <td>
-                        <button onClick={() => editStates(state)}>編集</button>
+                        <button onClick={() => editStates(todo)}>編集</button>
                       </td>
                       <td>
                         <button onClick={deleteStates}>削除</button>
