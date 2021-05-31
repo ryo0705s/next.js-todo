@@ -9,11 +9,14 @@ function Home() {
   const [valueTodo, setValueTodo] = useState("");
   const [valueLimit, setValueLimit] = useState("");
   const [todos, setTodos] = useState([]);
+
   const [edit, setEdit] = useState({ text: ["", ""], edited: false });
   const [editValue, setEditValue] = useState({ text: "" });
   const [editLimit, setEditLimit] = useState({ text: "" });
   const [editId, setEditId] = useState("");
+
   const [update, setUpdate] = useState({ text: ["", ""], updated: false });
+
   const [search, setSearch] = useState("");
   const [filteredStates, setFilteredStates] = useState([]);
 
@@ -35,16 +38,16 @@ function Home() {
     newTodo.splice(index, 1);
     setTodos(newTodo);
   };
-  const changeStates = (index) => {
+  const changeTodos = (index) => {
     const newTodo = [...todos];
     newTodo[index].complete = !newTodo[index].complete;
     setTodos(newTodo);
   };
-  const cancelStates = () => {
+  const cancelTodos = () => {
     setValueTodo("");
     setValueLimit("");
   };
-  const editStates = (todo, index) => {
+  const editTodos = (todo, index) => {
     setEdit(todo);
     setEditId(index + 1);
     todo.edited = !todo.edited;
@@ -86,7 +89,7 @@ function Home() {
           onChange={(e) => setValueLimit(e.target.value)}
         />
         <button onClick={handleSubmit}>追加</button>
-        <button onClick={cancelStates}>キャンセル</button>
+        <button onClick={cancelTodos}>キャンセル</button>
         <div>検索</div>
         <input onChange={(e) => setSearch(e.target.value)} />
         <table>
@@ -115,12 +118,12 @@ function Home() {
                           : todo.text[1]}
                       </td>
                       <td>
-                        <button onClick={() => changeStates(index)}>
+                        <button onClick={() => changeTodos(index)}>
                           {todo.complete ? "完了" : "未完了"}
                         </button>
                       </td>
                       <td>
-                        <button onClick={() => editStates(todo, index)}>
+                        <button onClick={() => editTodos(todo, index)}>
                           編集
                         </button>
                       </td>
@@ -139,12 +142,12 @@ function Home() {
                         {todo.text[1]}
                       </td>
                       <td>
-                        <button onClick={() => changeStates(index)}>
+                        <button onClick={() => changeTodos(index)}>
                           {todo.complete ? "完了" : "未完了"}
                         </button>
                       </td>
                       <td>
-                        <button onClick={() => editStates(todo)}>編集</button>
+                        <button onClick={() => editTodos(todo)}>編集</button>
                       </td>
                       <td>
                         <button onClick={deleteStates}>削除</button>
