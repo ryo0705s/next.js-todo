@@ -54,7 +54,7 @@ function Home() {
     setEditValue({ text: todo.text[0] });
     setEditLimit({ text: todo.text[1] });
   };
-  const handleUpdate = (index) => {
+  const handleUpdate = () => {
     const newEdit = { text: [editValue, editLimit], updated: true };
     const newTodos = [...todos];
     const updateId = editId - 1;
